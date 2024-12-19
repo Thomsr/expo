@@ -31,17 +31,16 @@ function ActivityIndicatorStopping({ hidesWhenStopped }: { hidesWhenStopped?: bo
 }
 
 export default function ActivityIndicatorScreen() {
-  const [x, setX] = React.useState('b');
+  const [x, setX] = React.useState('Mike');
   return (
     <>
-      <Text>{x}</Text>
       <ExpoJetpackComposeTestView
-        text={x}
-        onButtonPress={() => setX((x) => x + 'a')}
+        text={`Hello ${x}`}
+        onButtonPress={() => setX((x) => (x === 'Jake' ? 'Steve' : 'Jake'))}
         style={{
-          height: 60,
+          height: 80,
           width: 200,
-          margin: 10,
+          margin: 70,
         }}
       />
     </>
