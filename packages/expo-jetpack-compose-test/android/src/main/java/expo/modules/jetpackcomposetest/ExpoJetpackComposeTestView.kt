@@ -9,39 +9,41 @@ import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.MutableState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
-import androidx.compose.runtime.setValue
-import androidx.compose.ui.Modifier
-import androidx.compose.ui.unit.dp
 import expo.modules.kotlin.AppContext
+import expo.modules.kotlin.viewevent.EventDispatcher
 import expo.modules.kotlin.views.ExpoComposeView
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.Edit
+import androidx.compose.material3.ExtendedFloatingActionButton
+import androidx.compose.material3.Icon
 
+data class ExpoJetpackComposeTestProps(
+  val text: MutableState<String> = mutableStateOf("")
+)
 
 class ExpoJetpackComposeTestView(context: Context, appContext: AppContext) : ExpoComposeView(context, appContext) {
+  override val props = ExpoJetpackComposeTestProps()
+  val onButtonPress by EventDispatcher()
+
   @Composable
-  fun HelloContent() {
-    Column(modifier = Modifier.padding(16.dp)) {
-      var name by remember { mutableStateOf("") }
-      if (name.isNotEmpty()) {
-        Text(
-          text = "Hello, $name!",
-          modifier = Modifier.padding(bottom = 8.dp),
-          style = MaterialTheme.typography.bodyMedium
-        )
-      }
-      OutlinedTextField(
-        value = name,
-        onValueChange = { name = it },
-        label = { Text("Name") }
-      )
-    }
+  fun ExtendedFAB() {
+    val text by remember { props.text }
+    ExtendedFloatingActionButton(
+      onClick = { onButtonPress(mapOf()) },
+      icon = { Icon(Icons.Filled.Edit, "Extended floating action button.") },
+      text = { Text(text = text) },
+    )
   }
 
-
   init {
-    setContent({ HelloContent() })
+    clipChildren = false
+//    clipToPadding = false
+    clipToOutline = false
+    setContent { ExtendedFAB() }
   }
 }
 

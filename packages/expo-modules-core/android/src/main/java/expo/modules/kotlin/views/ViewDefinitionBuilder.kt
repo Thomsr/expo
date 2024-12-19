@@ -30,8 +30,7 @@ class ViewDefinitionBuilder<T : View>(
   @PublishedApi internal val viewClass: KClass<T>,
   @PublishedApi internal val viewType: KType
 ) {
-  @PublishedApi
-  internal var props = mutableMapOf<String, AnyViewProp>()
+  var props = mutableMapOf<String, AnyViewProp>()
 
   @PublishedApi
   internal var onViewDestroys: ((View) -> Unit)? = null
@@ -149,6 +148,16 @@ class ViewDefinitionBuilder<T : View>(
     props.forEachIndexed { index, name ->
       Prop<ViewType, PropType>(name) { view, prop -> body(view, index, prop) }
     }
+  }
+
+  inline fun <reified PropType : Any> ComposeProp(
+    name: String,
+    type: KClass<PropType>
+  ) {
+      props[name] = ComposeViewProp(
+        name,
+        toAnyType<PropType>(),
+      )
   }
 
   /**

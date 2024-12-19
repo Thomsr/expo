@@ -11,9 +11,10 @@ class ExpoJetpackComposeTestModule : Module() {
     Name("ExpoJetpackComposeTest")
 
     View(ExpoJetpackComposeTestView::class) {
-      Prop("text") { view, text: String ->
-        println(text)
-      }
+      ComposeProp("text", String::class)
+      Events(
+        "onButtonPress"
+      )
     }
   }
 }

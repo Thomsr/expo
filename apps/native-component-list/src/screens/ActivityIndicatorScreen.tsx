@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { ActivityIndicator, Platform, StyleSheet } from 'react-native';
+import { ActivityIndicator, Button, Platform, StyleSheet, Text } from 'react-native';
 
 import { Page, Section } from '../components/Page';
 import Colors from '../constants/Colors';
@@ -31,7 +31,21 @@ function ActivityIndicatorStopping({ hidesWhenStopped }: { hidesWhenStopped?: bo
 }
 
 export default function ActivityIndicatorScreen() {
-  return <ExpoJetpackComposeTestView text="123" style={{ height: 80, width: 200, margin: 10 }} />;
+  const [x, setX] = React.useState('b');
+  return (
+    <>
+      <Text>{x}</Text>
+      <ExpoJetpackComposeTestView
+        text={x}
+        onButtonPress={() => setX((x) => x + 'a')}
+        style={{
+          height: 60,
+          width: 200,
+          margin: 10,
+        }}
+      />
+    </>
+  );
   return (
     <Page>
       <Section title="Custom Color" row>

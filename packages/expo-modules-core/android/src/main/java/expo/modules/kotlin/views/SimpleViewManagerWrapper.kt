@@ -18,6 +18,12 @@ class SimpleViewManagerWrapper(
     val propsMap = props.getBackingMap()
     // Updates expo related properties.
     val handledProps = viewWrapperDelegate.updateProperties(viewToUpdate, propsMap)
+
+    if(viewToUpdate is ExpoComposeView) {
+      viewWrapperDelegate.updateProperties(viewToUpdate, propsMap)
+      return
+    }
+
     // Updates remaining props using RN implementation.
     // To not triggered undefined setters we filtrated already handled properties.
     super.updateProperties(
